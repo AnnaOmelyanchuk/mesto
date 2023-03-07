@@ -1,0 +1,5 @@
+.photo-grid__captions {
+  background-color: var(--caption-image-color);
+  display: flex;
+  border-radius: 0 0 10px 10px;
+}

@@ -1,0 +1,9 @@
+.header {
+  margin: 45px 200px 0 200px;
+}
+
+@media (max-width: 1280px) {
+  .header {
+    margin: calc(28px + ((-320px + 100vw) * 0.0177)) calc((-320px + 100vw) * 0.208) 0 calc((-320px + 100vw) * 0.208);
+  }
+}

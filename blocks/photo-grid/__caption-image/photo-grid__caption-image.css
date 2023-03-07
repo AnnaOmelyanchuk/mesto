@@ -1,0 +1,21 @@
+.photo-grid__caption-image {
+  margin: 30px 20px 7px auto;
+  width: 22px;
+  min-height: 19px;
+  display: inline-block;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  padding: 0;
+  cursor: pointer;
+
+}
+
+.photo-grid__caption-image:hover {
+  opacity: 0.5;
+}
+
+@media (max-width: 767px) {
+  .photo-grid__caption-image {
+    margin: 30px calc(30px + ((320px - 100vw) * 0.0022)) 7px auto;
+  }
+}

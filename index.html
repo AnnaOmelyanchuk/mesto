@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="pages/index.css">
+</head>
+
+<body class="page">
+
+  <header class="header">
+    <img src="./images/logo/header-logo.svg" alt="Логотип" class="header__logo">
+    <hr class="header__line">
+    </hr>
+  </header>
+
+  <main>
+    <section aria-label="Профиль" class="profile">
+      <img src="./images/avatar/avatar-zhack.jpg" alt="avatar" class="profile__avatar">
+      <div class="profile__info">
+        <h1 class="profile__name">Жак-Ив Кусто</h1>
+        <button class="profile__edit-button"></button>
+        <p class="profile__caption">Исследователь океана</p>
+      </div>
+      <button class="profile__add-button"></button>
+    </section>
+
+    <section aria-label="Фото мест" class="photo-grid">
+      <ul class="photo-grid__list">
+        <li>
+          <img src="./images/photo-grid/karachaevsk.jpg" alt="старый храм" class="photo-grid__image">
+          <div class="photo-grid__captions">
+            <p class="photo-grid__caption">Карачаевск</p>
+            <span class="photo-grid__caption-image photo-grid__caption-image_background_disabled"></span>
+          </div>
+        </li>
+        <li>
+          <img src="./images/photo-grid/albrus.jpg" alt="Горы в дали" class="photo-grid__image">
+          <div class="photo-grid__captions">
+            <p class="photo-grid__caption">Гора Эльбрус</p>
+            <span class="photo-grid__caption-image photo-grid__caption-image_background_disabled"></span>
+          </div>
+        </li>
+        <li>
+          <img src="./images/photo-grid/dombay.jpg" alt="снежные горы" class="photo-grid__image">
+          <div class="photo-grid__captions">
+            <p class="photo-grid__caption">Домбай</p>
+            <span class="photo-grid__caption-image photo-grid__caption-image_background_disabled"></span>
+          </div>
+        </li>
+        <li>
+          <img src="./images/photo-grid/albrus.jpg" alt="Горы в дали" class="photo-grid__image">
+          <div class="photo-grid__captions">
+            <p class="photo-grid__caption">Гора Эльбрус</p>
+            <span class="photo-grid__caption-image photo-grid__caption-image_background_disabled"></span>
+          </div>
+        </li>
+        <li>
+          <img src="./images/photo-grid/dombay.jpg" alt="снежные горы" class="photo-grid__image">
+          <div class="photo-grid__captions">
+            <p class="photo-grid__caption">Домбай</p>
+            <span class="photo-grid__caption-image photo-grid__caption-image_background_disabled"></span>
+          </div>
+        </li>
+        <li>
+          <img src="./images/photo-grid/karachaevsk.jpg" alt="старый храм" class="photo-grid__image">
+          <div class="photo-grid__captions">
+            <p class="photo-grid__caption">Карачаево-Черкесия</p>
+            <span class="photo-grid__caption-image photo-grid__caption-image_background_disabled"></span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <div class="popup">
+    <form class="popup__container" type="text">
+      <span class="popup__close-btn"></span>
+      <div>
+        <h1 class="popup__title">Редактировать профиль</h1>
+        <input class="popup__input-name" type="text" name="name">
+        <hr class="popup__line">
+        </hr>
+        <input class="popup__input-caption" type="text" name="text">
+        <hr class="popup__line">
+        </hr>
+        <button class="popup__save-btn" input type="submit">Сохранить</button>
+      </div>
+    </form>
+  </div>
+  <footer class="footer">
+    <p class="footer__author">&copy;&nbsp;2020 Mesto Russia</p>
+  </footer>
+  <script src="./scripts/ChangeOfphotogrid__caption.js"></script>
+  <script src="./scripts/popup.js"></script>
+</body>
+
+</html>
