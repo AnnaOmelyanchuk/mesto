@@ -32,7 +32,6 @@
   .profile__edit-button {
     min-height: calc(18px + ((-320px + 100vw) * 0.0085));
     margin: 0 0 0 10px;
-    min-height: 18px;
     padding: 0 8px;
   }
 
