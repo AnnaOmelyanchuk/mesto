@@ -23,6 +23,6 @@
   .popup__close-btn {
     top: calc(-38px + ((-320px + 100vw) * 0.011));
     width: calc(20px + ((-320px + 100vw) * 0.017));
-    left: calc(262px + ((-320px + 100vw) * 0.25))
+    left: calc(262px + ((-320px + 100vw) * 0.25));
   }
 }
