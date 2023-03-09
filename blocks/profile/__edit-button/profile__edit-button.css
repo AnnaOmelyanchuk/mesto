@@ -6,7 +6,7 @@
   user-select: none;
   padding: 0 10px;
   outline: none;
-  border: 2px solid;
+  border: 1px solid;
   background-color: var(--primary-full-opacity);
   align-self: center;
   margin: 25px 0 0 18px;
@@ -38,7 +38,6 @@
   .profile__edit-button:before {
     width: 7.5px;
     min-height: 7.5px;
-    background: url("../../../images/buttons/edit.svg");
     top: 3px;
     left: 4.5px;
     background-size: 100%;

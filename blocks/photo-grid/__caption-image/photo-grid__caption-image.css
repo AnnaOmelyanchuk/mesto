@@ -1,13 +1,14 @@
 .photo-grid__caption-image {
   margin: 30px 20px 7px auto;
   width: 22px;
-  min-height: 19px;
-  display: inline-block;
   background-size: 100%;
   background-repeat: no-repeat;
   padding: 0;
   cursor: pointer;
-
+  border: none;
+  font: inherit;
+  background-color: transparent;
+  background-image: url(../../..///images/photo-grid/caption-image-disabled.svg);
 }
 
 .photo-grid__caption-image:hover {

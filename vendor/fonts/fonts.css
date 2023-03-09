@@ -24,18 +24,6 @@
 
 @font-face {
   font-family: 'Inter';
-  src: url('inter/Inter-Bold.eot');
-  src: local('Inter Bold'), local('Inter-Bold'),
-      url('inter/Inter-Bold.eot?#iefix') format('embedded-opentype'),
-      url('inter/Inter-Bold.woff2') format('woff2'),
-      url('inter/Inter-Bold.woff') format('woff'),
-      url('inter/Inter-Bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Inter';
   src: url('inter/Inter-Medium.eot');
   src: local('Inter Medium'), local('Inter-Medium'),
       url('inter/Inter-Medium.eot?#iefix') format('embedded-opentype'),

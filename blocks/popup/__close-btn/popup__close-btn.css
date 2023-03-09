@@ -8,8 +8,11 @@
   background-repeat: no-repeat;
   padding: 0;
   background-image: url(../../../images/buttons/сlose_icon.svg);
-  position: fixed;
+  position: relative;
   cursor: pointer;
+  border: none;
+  font: inherit;
+  background-color: transparent;
 }
 
 .popup__close-btn:hover {
@@ -20,6 +23,6 @@
   .popup__close-btn {
     top: calc(-38px + ((-320px + 100vw) * 0.011));
     width: calc(20px + ((-320px + 100vw) * 0.017));
-    left: calc(262px + ((-320px + 100vw) * 0.25));
+    left: calc(262px + ((-320px + 100vw) * 0.25))
   }
 }

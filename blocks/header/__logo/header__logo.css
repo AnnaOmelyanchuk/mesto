@@ -2,6 +2,7 @@
   max-width: 142px;
   margin: 0;
   object-fit: cover;
+  display: block;
 }
 
 @media (max-width: 1280px) {
@@ -10,3 +11,4 @@
     margin: 0 0 0 calc(27px + ((320px - 100vw) * 0.0281));
   }
 }
+
