@@ -10,7 +10,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-family: var(--primary-font);
 }
 
 @media (min-width:1024px) and (max-width: 1280px) {
