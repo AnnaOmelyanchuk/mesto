@@ -10,6 +10,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-family: var(--primary-font);
 }
 
 @media (min-width:1024px) and (max-width: 1280px) {
@@ -27,6 +28,5 @@
 @media (max-width: 767px) {
   .photo-grid__caption {
     max-width: calc(166px + ((-320px + 100vw) * 0.52));
-    font-family: 'Inter';
   }
 }
