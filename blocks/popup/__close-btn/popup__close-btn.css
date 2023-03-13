@@ -1,6 +1,6 @@
 .popup__close-btn {
-  top: -40px;
-  left: 438px;
+  top: -200px;
+  left: 454px;
   width: 32px;
   min-height: 32px;
   display: inline-block;
@@ -13,6 +13,7 @@
   border: none;
   font: inherit;
   background-color: transparent;
+
 }
 
 .popup__close-btn:hover {
@@ -21,8 +22,8 @@
 
 @media (max-width: 1023px) {
   .popup__close-btn {
-    top: calc(-38px + ((-320px + 100vw) * 0.011));
+    top: calc(-184px + ((320px - 100vw) * 0.022));
     width: calc(20px + ((-320px + 100vw) * 0.017));
-    left: calc(262px + ((-320px + 100vw) * 0.25));
+    left: calc(272px + ((-320px + 100vw) * 0.26));
   }
 }
