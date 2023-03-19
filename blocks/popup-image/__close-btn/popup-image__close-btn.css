@@ -11,8 +11,8 @@
   border: none;
   font: inherit;
   background-color: transparent;
-  bottom: 102%;
-  left: 102%;
+  bottom: 99%;
+  left: 96%;
 }
 
 .popup__close-btn:hover {
@@ -21,8 +21,8 @@
 
 @media (max-width: 720px) {
   .popup-image__close-btn {
-    bottom: calc(102% + ((320px - 100vw) * 0.002));
-    left: calc(91% + ((-320px + 100vw) * 0.12));
+    bottom: calc(93% + ((-320px + 100vw) * 0.06));
+    left: calc(81% + ((-320px + 100vw) * 0.235));
   }
 }
 
