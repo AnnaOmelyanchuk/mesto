@@ -19,7 +19,9 @@
 
 @import url(../blocks/photo-grid/photo-grid.css);
 @import url(../blocks/photo-grid/__image/photo-grid__image.css);
+@import url(../blocks/photo-grid/__button-delete/photo-grid__button-delete.css);
 @import url(../blocks/photo-grid/__list/photo-grid__list.css);
+@import url(../blocks/photo-grid/__item/__photo-grid__item.css);
 @import url(../blocks/photo-grid/__captions/photo-grid__captions.css);
 @import url(../blocks/photo-grid/__caption/photo-grid__caption.css);
 @import url(../blocks/photo-grid/__caption-image/photo-grid__caption-image.css);
@@ -38,6 +40,12 @@
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 
+@import url(../blocks/popup-image/popup-image.css);
+@import url(../blocks/popup-image/_opened/popup-image_opened.css);
+@import url(../blocks/popup-image/__close-btn/popup-image__close-btn.css);
+@import url(../blocks/popup-image/__figure/popup-image__figure.css);
+@import url(../blocks/popup-image/__image/popup-image__image.css);
+@import url(../blocks/popup-image/__caption/popup-image__caption.css);
 
 
 
