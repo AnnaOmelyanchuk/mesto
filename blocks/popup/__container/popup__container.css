@@ -6,7 +6,6 @@
   display: flex;
   flex-flow: column;
   position: relative;
-  right: 16px;
 }
 
 @media (max-width: 1023px) {
