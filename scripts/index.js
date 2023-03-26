@@ -1,46 +1,13 @@
-const cardImage = document.querySelector('#cardImage'); // темплейт
+const cardImage = document.querySelector('#cardImage').content.querySelector('.photo-grid__item'); //  шаблон и  разметка карточки
 const photoGridList = document.querySelector('.photo-grid__list'); //место вставки темплейта
+const popupImage = document.querySelector('.popup_image-viewer');
 
-
-
-//создать карточки
-function createNewCard(newCard) {
-  const cardImageTemplate = newCard.content;
-  const cardImageElement = cardImageTemplate.children[0].cloneNode(true);
-  photoGridList.prepend(cardImageElement);
-
-  cardImageElement.querySelector('.photo-grid__caption-image').addEventListener('click', () =>
-    cardImageElement.querySelector('.photo-grid__caption-image').classList.toggle('photo-grid__caption-image_background_active'))
-
-  cardImageElement.querySelector('.photo-grid__button-delete').addEventListener('click', () =>
-    deleteImageCard(cardImageElement.querySelector('.photo-grid__button-delete')));
-
-  cardImageElement.querySelector('.photo-grid__image').addEventListener('click', () => { openPopup(popupImageViewer); chooseImage(cardImageElement.querySelector('.photo-grid__image')) });
-}
-
-
-
-//удалить карточки
-function deleteImageCard(button) {
-  button.closest('li').remove();
-}
-
-//инициация
-initialCards.reverse().forEach((element) => {
-  templateCurrent = cardImage;
-  templateCurrent.content.querySelector('img').src = element.link;
-  templateCurrent.content.querySelector('img').alt = element.name;
-  templateCurrent.content.querySelector('.photo-grid__caption').textContent = element.name;
-  createNewCard(templateCurrent);
-})
-
-let profileName = document.querySelector('.profile__name');
-let profileCaption = document.querySelector('.profile__caption');
-let jobInput = document.querySelector('.popup__input_text_caption');
-let nameInput = document.querySelector('.popup__input_text_name');
-let linkInput = document.querySelector('.popup__input_img_link');
-let imageNameInput = document.querySelector('.popup__input_img_name');
-
+const profileName = document.querySelector('.profile__name');
+const profileCaption = document.querySelector('.profile__caption');
+const jobInput = document.querySelector('.popup__input_text_caption');
+const nameInput = document.querySelector('.popup__input_text_name');
+const linkInput = document.querySelector('.popup__input_img_link');
+const imageNameInput = document.querySelector('.popup__input_img_name');
 const closeEditButton = document.querySelector('.popup__close-btn_edit'); // кнопка закрытия для формы редактирования
 const closeAddImageButton = document.querySelector('.popup__close-btn_add-image'); // кнопка закрытия для формы довавления изображения
 const closeImageViewer = document.querySelector('.popup__close-btn_image-viewer'); // закрыть для просмотра изображения
@@ -53,6 +20,40 @@ const formEditElement = document.querySelector('.popup__form_edit');
 const formAddElement = document.querySelector('.popup__form_add');
 const viewImage = document.querySelector('.popup__image');
 const viewImageCaption = document.querySelector('.popup__caption');
+
+
+//создать карточки
+function createNewCard(infoCard) {
+  const cardImageTemplate = cardImage.cloneNode(true);   //копирование разметки шаблона
+  const imageElement = cardImageTemplate.querySelector('.photo-grid__image');
+  const captionElement = cardImageTemplate.querySelector('.photo-grid__caption');
+  imageElement.src = infoCard.link;
+  imageElement.alt = infoCard.name;
+  captionElement.textContent = infoCard.name;
+
+  cardImageTemplate.querySelector('.photo-grid__caption-image').addEventListener('click', (e) =>
+    e.target.classList.toggle('photo-grid__caption-image_background_active'))            //target — ссылка на объект, которым было инициировано событие
+
+  cardImageTemplate.querySelector('.photo-grid__button-delete').addEventListener('click', () =>
+    deleteImageCard(cardImageTemplate));
+
+  imageElement.addEventListener('click', () => chooseImage(infoCard));
+
+  return cardImageTemplate;  //Функция createNewCard должна только возвращать карточку
+}
+
+
+
+//удалить карточки
+function deleteImageCard(card) {
+  card.remove();
+}
+
+initialCards.reverse().forEach((element) => {
+  photoGridList.prepend(createNewCard(element));
+})
+
+
 
 function feelUpInput() {
   nameInput.value = profileName.textContent;
@@ -67,16 +68,14 @@ function handleFormEditSubmit(evt) {
   closePopup(popupEdit);
 }
 
+
 //отправка формы добавления
 function handleFormAddSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  templateCurrent = cardImage;
-  templateCurrent.content.querySelector('img').src = linkInput.value;
-  templateCurrent.content.querySelector('img').alt = imageNameInput.value;
-  templateCurrent.content.querySelector('.photo-grid__caption').textContent = imageNameInput.value;
-  createNewCard(templateCurrent);
+  photoGridList.prepend(createNewCard({ link: linkInput.value, name: imageNameInput.value }));
   closePopup(popupAddImage);
 }
+
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -86,13 +85,14 @@ function closePopup(popup) {
   popup.classList.remove("popup_opened");
 }
 
-function chooseImage(img) {
-  viewImage.src = img.src;
-  viewImage.alt = img.alt;
-  viewImageCaption.textContent = img.alt;
+function chooseImage(infoCard) {
+  popupImage.classList.add("popup_opened");
+  viewImage.src = infoCard.link;
+  viewImage.alt = infoCard.alt;
+  viewImageCaption.textContent = infoCard.alt;
 }
 
-openEditButton.addEventListener('click', () => openPopup(popupEdit), feelUpInput());
+openEditButton.addEventListener('click', () => { openPopup(popupEdit), feelUpInput() });
 openAddImageButton.addEventListener('click', () => openPopup(popupAddImage));
 
 closeEditButton.addEventListener('click', () => closePopup(popupEdit));
