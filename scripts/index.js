@@ -86,10 +86,10 @@ function closePopup(popup) {
 }
 
 function chooseImage(infoCard) {
-  popupImage.classList.add("popup_opened");
+  openPopup(popupImage);
   viewImage.src = infoCard.link;
-  viewImage.alt = infoCard.alt;
-  viewImageCaption.textContent = infoCard.alt;
+  viewImage.alt = infoCard.name;
+  viewImageCaption.textContent = infoCard.name;
 }
 
 openEditButton.addEventListener('click', () => { openPopup(popupEdit), feelUpInput() });
