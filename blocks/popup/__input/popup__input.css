@@ -11,6 +11,7 @@
   color: var(--editForm-text-color);
   padding-bottom: 12px;
   border-bottom: 1px solid #00000033;
+  position: relative;
 }
 
 @media (max-width: 1023px) {
@@ -20,3 +21,6 @@
   }
 }
 
+.popup__input:invalid {
+  border-bottom: 1px solid var(--color-of-eror-form);
+}

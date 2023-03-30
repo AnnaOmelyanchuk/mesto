@@ -103,3 +103,15 @@ formEditElement.addEventListener('submit', handleFormEditSubmit);
 formAddElement.addEventListener('submit', handleFormAddSubmit);
 
 
+//закрываем от оверлей
+const closeOverlayPopupList = Array.from(document.querySelectorAll(`.popup`));
+closeOverlayPopupList.forEach((popup) => {
+  popup.addEventListener('click', () => closePopup(popup),
+    popup.querySelector('.popup__reletive-block').addEventListener('click', (e) => e.stopPropagation()));
+});
+
+//закрываем от esc
+const closeEscPopupList = Array.from(document.querySelectorAll(`.popup`));
+closeOverlayPopupList.forEach((popup) => {
+  addEventListener('keydown', (e) => { if (e.key === "Escape") closePopup(popup) });
+});
