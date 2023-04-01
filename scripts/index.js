@@ -1,7 +1,7 @@
 const cardImage = document.querySelector('#cardImage').content.querySelector('.photo-grid__item'); //  шаблон и  разметка карточки
 const photoGridList = document.querySelector('.photo-grid__list'); //место вставки темплейта
 const popupImage = document.querySelector('.popup_image-viewer');
-
+const popupsArr = Array.from(document.querySelectorAll(`.popup`));
 const profileName = document.querySelector('.profile__name');
 const profileCaption = document.querySelector('.profile__caption');
 const jobInput = document.querySelector('.popup__input_text_caption');
@@ -73,16 +73,19 @@ function handleFormEditSubmit(evt) {
 function handleFormAddSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   photoGridList.prepend(createNewCard({ link: linkInput.value, name: imageNameInput.value }));
+  evt.target.reset();
   closePopup(popupAddImage);
 }
 
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  document.addEventListener('keydown', closeByEscape); //<== навесили  обработчик ==
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  document.removeEventListener('keydown', closeByEscape); // <== удалили обработчик ==
 }
 
 function chooseImage(infoCard) {
@@ -93,25 +96,41 @@ function chooseImage(infoCard) {
 }
 
 openEditButton.addEventListener('click', () => { openPopup(popupEdit), feelUpInput() });
-openAddImageButton.addEventListener('click', () => openPopup(popupAddImage));
+openAddImageButton.addEventListener('click', () => {
+  openPopup(popupAddImage);
+  popupAddImage.querySelector('.popup__save-btn').setAttribute('disabled', 'true');
+  popupAddImage.querySelector('.popup__save-btn').classList.add('popup__save-btn_state_inactive');
+});
 
-closeEditButton.addEventListener('click', () => closePopup(popupEdit));
-closeAddImageButton.addEventListener('click', () => closePopup(popupAddImage));
-closeImageViewer.addEventListener('click', () => closePopup(popupImageViewer));
+popupsArr.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup);
+    }
+    if (evt.target.classList.contains('popup__close-btn')) {
+      closePopup(popup);
+    }
+  })
+})
+
+
+
+
+
 
 formEditElement.addEventListener('submit', handleFormEditSubmit);
 formAddElement.addEventListener('submit', handleFormAddSubmit);
 
 
-//закрываем от оверлей
-const closeOverlayPopupList = Array.from(document.querySelectorAll(`.popup`));
-closeOverlayPopupList.forEach((popup) => {
-  popup.addEventListener('click', () => closePopup(popup),
-    popup.querySelector('.popup__reletive-block').addEventListener('click', (e) => e.stopPropagation()));
-});
-
 //закрываем от esc
-const closeEscPopupList = Array.from(document.querySelectorAll(`.popup`));
-closeOverlayPopupList.forEach((popup) => {
+popupsArr.forEach((popup) => {
   addEventListener('keydown', (e) => { if (e.key === "Escape") closePopup(popup) });
 });
+
+function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened') //нашли открытый попап
+    closePopup(openedPopup);
+  }
+}
+
