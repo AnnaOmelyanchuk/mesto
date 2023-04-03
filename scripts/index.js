@@ -22,6 +22,7 @@ const viewImage = document.querySelector('.popup__image');
 const viewImageCaption = document.querySelector('.popup__caption');
 
 
+
 //создать карточки
 function createNewCard(infoCard) {
   const cardImageTemplate = cardImage.cloneNode(true);   //копирование разметки шаблона
@@ -98,8 +99,9 @@ function chooseImage(infoCard) {
 openEditButton.addEventListener('click', () => { openPopup(popupEdit), feelUpInput() });
 openAddImageButton.addEventListener('click', () => {
   openPopup(popupAddImage);
-  popupAddImage.querySelector('.popup__save-btn').setAttribute('disabled', 'true');
-  popupAddImage.querySelector('.popup__save-btn').classList.add('popup__save-btn_state_inactive');
+  const popupSave = popupAddImage.querySelector('.popup__save-btn');
+  popupSave.setAttribute('disabled', 'true');
+  popupSave.classList.add('popup__save-btn_state_inactive');
 });
 
 popupsArr.forEach((popup) => {
@@ -114,18 +116,9 @@ popupsArr.forEach((popup) => {
 })
 
 
-
-
-
-
 formEditElement.addEventListener('submit', handleFormEditSubmit);
 formAddElement.addEventListener('submit', handleFormAddSubmit);
 
-
-//закрываем от esc
-popupsArr.forEach((popup) => {
-  addEventListener('keydown', (e) => { if (e.key === "Escape") closePopup(popup) });
-});
 
 function closeByEscape(evt) {
   if (evt.key === 'Escape') {
