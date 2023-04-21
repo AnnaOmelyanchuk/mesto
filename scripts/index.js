@@ -1,5 +1,3 @@
-const cardImage = document.querySelector('#cardImage').content.querySelector('.photo-grid__item'); //  шаблон и  разметка карточки
-const photoGridList = document.querySelector('.photo-grid__list'); //место вставки темплейта
 const popupImage = document.querySelector('.popup_image-viewer');
 const popupsArr = Array.from(document.querySelectorAll(`.popup`));
 const profileName = document.querySelector('.profile__name');
@@ -8,53 +6,17 @@ const jobInput = document.querySelector('.popup__input_text_caption');
 const nameInput = document.querySelector('.popup__input_text_name');
 const linkInput = document.querySelector('.popup__input_img_link');
 const imageNameInput = document.querySelector('.popup__input_img_name');
-const closeEditButton = document.querySelector('.popup__close-btn_edit'); // кнопка закрытия для формы редактирования
-const closeAddImageButton = document.querySelector('.popup__close-btn_add-image'); // кнопка закрытия для формы довавления изображения
-const closeImageViewer = document.querySelector('.popup__close-btn_image-viewer'); // закрыть для просмотра изображения
 const openEditButton = document.querySelector('.profile__edit-button'); // кнопка открытия для формы редактирования
 const openAddImageButton = document.querySelector('.profile__add-button'); // кнопка открытия для формы довавления изображения
 const popupEdit = document.querySelector('.popup_edit');
 const popupAddImage = document.querySelector('.popup_add-image');
-const popupImageViewer = document.querySelector('.popup_image-viewer');
 const formEditElement = document.querySelector('.popup__form_edit');
 const formAddElement = document.querySelector('.popup__form_add');
 const viewImage = document.querySelector('.popup__image');
 const viewImageCaption = document.querySelector('.popup__caption');
 
-
-
-//создать карточки
-function createNewCard(infoCard) {
-  const cardImageTemplate = cardImage.cloneNode(true);   //копирование разметки шаблона
-  const imageElement = cardImageTemplate.querySelector('.photo-grid__image');
-  const captionElement = cardImageTemplate.querySelector('.photo-grid__caption');
-  imageElement.src = infoCard.link;
-  imageElement.alt = infoCard.name;
-  captionElement.textContent = infoCard.name;
-
-  cardImageTemplate.querySelector('.photo-grid__caption-image').addEventListener('click', (e) =>
-    e.target.classList.toggle('photo-grid__caption-image_background_active'))            //target — ссылка на объект, которым было инициировано событие
-
-  cardImageTemplate.querySelector('.photo-grid__button-delete').addEventListener('click', () =>
-    deleteImageCard(cardImageTemplate));
-
-  imageElement.addEventListener('click', () => chooseImage(infoCard));
-
-  return cardImageTemplate;  //Функция createNewCard должна только возвращать карточку
-}
-
-
-
-//удалить карточки
-function deleteImageCard(card) {
-  card.remove();
-}
-
-initialCards.reverse().forEach((element) => {
-  photoGridList.prepend(createNewCard(element));
-})
-
-
+import {Card as Card} from './card.js'
+import {FormValidator as FormValidator, listElementsOfForm as listElementsOfForm} from './FormValidator.js'
 
 function feelUpInput() {
   nameInput.value = profileName.textContent;
@@ -73,7 +35,9 @@ function handleFormEditSubmit(evt) {
 //отправка формы добавления
 function handleFormAddSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  photoGridList.prepend(createNewCard({ link: linkInput.value, name: imageNameInput.value }));
+  const card = new Card({ link: linkInput.value, name: imageNameInput.value }, '.photo-grid__item');
+  const cardElement = card.generateCard();
+  document.querySelector('.photo-grid__list').prepend(cardElement);
   evt.target.reset();
   closePopup(popupAddImage);
 }
@@ -87,13 +51,6 @@ function openPopup(popup) {
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener('keydown', closeByEscape); // <== удалили обработчик ==
-}
-
-function chooseImage(infoCard) {
-  openPopup(popupImage);
-  viewImage.src = infoCard.link;
-  viewImage.alt = infoCard.name;
-  viewImageCaption.textContent = infoCard.name;
 }
 
 openEditButton.addEventListener('click', () => { openPopup(popupEdit), feelUpInput() });
@@ -115,7 +72,6 @@ popupsArr.forEach((popup) => {
   })
 })
 
-
 formEditElement.addEventListener('submit', handleFormEditSubmit);
 formAddElement.addEventListener('submit', handleFormAddSubmit);
 
@@ -127,3 +83,15 @@ function closeByEscape(evt) {
   }
 }
 
+initialCards.reverse().forEach((element) => {
+  const card = new Card(element, '.photo-grid__item');
+  const cardElement = card.generateCard();
+  document.querySelector('.photo-grid__list').prepend(cardElement);
+})
+
+
+const formValidatorAdd = new FormValidator(listElementsOfForm, '.popup__form_add');
+formValidatorAdd.enableValidation();
+
+const formValidatorEdit = new FormValidator(listElementsOfForm, '.popup__form_edit');
+formValidatorEdit.enableValidation();
