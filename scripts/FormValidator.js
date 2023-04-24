@@ -18,28 +18,33 @@ class FormValidator {
   }
 
   enableValidation() {
-    const form = document.querySelector(`${this._formSelector}`);
-      form.addEventListener('submit', function (evt) {
+    this._form = document.querySelector(`${this._formSelector}`);
+     this._form.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
-    this._setEventListeners(form);
+    this._setEventListeners(this._form);
   };
 
   _setEventListeners(form) {
-    const inputList = Array.from(form.querySelectorAll(`${this._inputSelector}`));
-    const buttonElement = form.querySelector(`${this._submitButtonSelector}`);
-    this._toggleButtonState(inputList, buttonElement);
-    inputList.forEach((inputElement) => {
+    this._inputList = Array.from(form.querySelectorAll(`${this._inputSelector}`));
+    this._buttonElement = form.querySelector(`${this._submitButtonSelector}`);
+    this._toggleButtonState(this._inputList, this._buttonElement);
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState(inputList, buttonElement);
+        this._toggleButtonState(this._inputList, this._buttonElement);
       });
     });
   };
 
+  resetValidation() {
+    this._toggleButtonState(this._inputList, this._buttonElement); //<== управляем кнопкой ==
+    this._inputList.forEach((inputElement) => {
+    this._hideInputError(inputElement.closest('div').querySelector('.popup__error-caption_place_name')) //<==очищаем ошибки ==
+    });
+  }
 
   _toggleButtonState(inputList, buttonElement) {
-
     if (this._hasInvalidInput(inputList)) {
       buttonElement.classList.add(`${this._inactiveButtonClass}`);
       buttonElement.setAttribute('disabled', 'true');
@@ -49,27 +54,27 @@ class FormValidator {
     }
   }
 
-
   _hasInvalidInput(inputList) {
-    return  inputList.some(function(inputElement)  {
+    return  inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
 
   _checkInputValidity(inputElement) {
+    this._errorCaption = inputElement.closest('div').querySelector('.popup__error-caption_place_name');
     if (!inputElement.validity.valid) {
       if (inputElement.value != 0) {
-        this._showInputError(inputElement.nextElementSibling, `Минимальное количество символов 2. Длина текста сейчас: ${inputElement.value.length} символ.`);
+        this._showInputError(this._errorCaption, `Минимальное количество символов 2. Длина текста сейчас: ${inputElement.value.length} символ.`);
       }
       else {
-        this._showInputError(inputElement.nextElementSibling, `Вы пропустили это поле`);
+        this._showInputError(this._errorCaption, `Вы пропустили это поле`);
       }
       if (inputElement.validity.typeMismatch) {
-        this._showInputError(inputElement.nextElementSibling, `Введите адрес сайта.`);
+        this._showInputError(this._errorCaption, `Введите адрес сайта.`);
       }
     }
     else {
-      this._hideInputError(inputElement.nextElementSibling);
+      this._hideInputError(this._errorCaption);
     }
   };
 

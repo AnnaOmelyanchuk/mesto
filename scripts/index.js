@@ -1,4 +1,3 @@
-const popupImage = document.querySelector('.popup_image-viewer');
 const popupsArr = Array.from(document.querySelectorAll(`.popup`));
 const profileName = document.querySelector('.profile__name');
 const profileCaption = document.querySelector('.profile__caption');
@@ -12,8 +11,8 @@ const popupEdit = document.querySelector('.popup_edit');
 const popupAddImage = document.querySelector('.popup_add-image');
 const formEditElement = document.querySelector('.popup__form_edit');
 const formAddElement = document.querySelector('.popup__form_add');
-const viewImage = document.querySelector('.popup__image');
-const viewImageCaption = document.querySelector('.popup__caption');
+const sectionCard = document.querySelector('.photo-grid__list');
+
 
 import {Card as Card} from './card.js'
 import {FormValidator as FormValidator, listElementsOfForm as listElementsOfForm} from './FormValidator.js'
@@ -31,13 +30,27 @@ function handleFormEditSubmit(evt) {
   closePopup(popupEdit);
 }
 
+function handleCardClick(data) {
+  const popupImage = document.querySelector('.popup_image-viewer');
+  const viewImage = document.querySelector('.popup__image');
+  const viewImageCaption = document.querySelector('.popup__caption');
+  openPopup(popupImage);
+  viewImage.src = data.link;
+  viewImage.alt = data.name;
+  viewImageCaption.textContent = data.name;
+}
+
+function createCard(item) {
+    const card = new Card(item, '.photo-grid__item', handleCardClick);
+    const cardElement = card.generateCard();
+    return cardElement
+  }
+
 
 //отправка формы добавления
 function handleFormAddSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  const card = new Card({ link: linkInput.value, name: imageNameInput.value }, '.photo-grid__item');
-  const cardElement = card.generateCard();
-  document.querySelector('.photo-grid__list').prepend(cardElement);
+  sectionCard.prepend(createCard({ link: linkInput.value, name: imageNameInput.value }));
   evt.target.reset();
   closePopup(popupAddImage);
 }
@@ -53,12 +66,17 @@ function closePopup(popup) {
   document.removeEventListener('keydown', closeByEscape); // <== удалили обработчик ==
 }
 
-openEditButton.addEventListener('click', () => { openPopup(popupEdit), feelUpInput() });
+
+
+openEditButton.addEventListener('click', () => { openPopup(popupEdit),
+  feelUpInput(),
+  formValidatorEdit.resetValidation()
+});
+
+
 openAddImageButton.addEventListener('click', () => {
+  formValidatorAdd.resetValidation(),
   openPopup(popupAddImage);
-  const popupSave = popupAddImage.querySelector('.popup__save-btn');
-  popupSave.setAttribute('disabled', 'true');
-  popupSave.classList.add('popup__save-btn_state_inactive');
 });
 
 popupsArr.forEach((popup) => {
@@ -84,9 +102,7 @@ function closeByEscape(evt) {
 }
 
 initialCards.reverse().forEach((element) => {
-  const card = new Card(element, '.photo-grid__item');
-  const cardElement = card.generateCard();
-  document.querySelector('.photo-grid__list').prepend(cardElement);
+  sectionCard.prepend(createCard(element));
 })
 
 
