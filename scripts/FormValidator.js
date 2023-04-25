@@ -40,7 +40,7 @@ class FormValidator {
   resetValidation() {
     this._toggleButtonState(this._inputList, this._buttonElement); //<== управляем кнопкой ==
     this._inputList.forEach((inputElement) => {
-    this._hideInputError(inputElement.closest('div').querySelector('.popup__error-caption_place_name')) //<==очищаем ошибки ==
+    this._hideInputError(inputElement.closest('div').querySelector(`${this._inputErrorClass}`)) //<==очищаем ошибки ==
     });
   }
 
@@ -61,7 +61,7 @@ class FormValidator {
   }
 
   _checkInputValidity(inputElement) {
-    this._errorCaption = inputElement.closest('div').querySelector('.popup__error-caption_place_name');
+    this._errorCaption = inputElement.closest('div').querySelector(`${this._inputErrorClass}`);
     if (!inputElement.validity.valid) {
       if (inputElement.value != 0) {
         this._showInputError(this._errorCaption, `Минимальное количество символов 2. Длина текста сейчас: ${inputElement.value.length} символ.`);

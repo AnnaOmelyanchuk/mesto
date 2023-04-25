@@ -7,7 +7,7 @@
 
     _getTemplate() {
     const cardElement = document
-      .querySelector('#cardImage')
+      .querySelector(this._templateSelector)
       .content
       .querySelector('.photo-grid__item')
       .cloneNode(true);

@@ -12,7 +12,9 @@ const popupAddImage = document.querySelector('.popup_add-image');
 const formEditElement = document.querySelector('.popup__form_edit');
 const formAddElement = document.querySelector('.popup__form_add');
 const sectionCard = document.querySelector('.photo-grid__list');
-
+const popupImage = document.querySelector('.popup_image-viewer');
+const viewImage = document.querySelector('.popup__image');
+const viewImageCaption = document.querySelector('.popup__caption');
 
 import {Card as Card} from './card.js'
 import {FormValidator as FormValidator, listElementsOfForm as listElementsOfForm} from './FormValidator.js'
@@ -31,9 +33,6 @@ function handleFormEditSubmit(evt) {
 }
 
 function handleCardClick(data) {
-  const popupImage = document.querySelector('.popup_image-viewer');
-  const viewImage = document.querySelector('.popup__image');
-  const viewImageCaption = document.querySelector('.popup__caption');
   openPopup(popupImage);
   viewImage.src = data.link;
   viewImage.alt = data.name;
@@ -41,7 +40,7 @@ function handleCardClick(data) {
 }
 
 function createCard(item) {
-    const card = new Card(item, '.photo-grid__item', handleCardClick);
+    const card = new Card(item, '#cardImage', handleCardClick);
     const cardElement = card.generateCard();
     return cardElement
   }
