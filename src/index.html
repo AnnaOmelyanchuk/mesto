@@ -5,18 +5,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
-  <link rel="stylesheet" href="pages/index.css">
+  <!--<link rel="stylesheet" href="pages/index.css">-->
 </head>
 
 <body class="page">
 
   <header class="header">
-    <img src="./images/logo/header-logo.svg" alt="Логотип" class="header__logo">
+    <img src="<%=require('./images/logo/header-logo.svg')%>" alt="Логотип" class="header__logo">
   </header>
 
   <main>
     <section aria-label="Профиль" class="profile">
-      <img src="./images/avatar/avatar-zhack.jpg" alt="аватар" class="profile__avatar">
+      <img src="<%=require('./images/avatar/avatar-zhack.jpg')%>" alt="аватар" class="profile__avatar">
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
         <button class="profile__edit-button" type="button" aria-label="редактировать"></button>
@@ -29,7 +29,7 @@
       <ul class="photo-grid__list">
         <template id="cardImage">
           <li class="photo-grid__item">
-            <img src="./images/photo-grid/karachaevsk.jpg" alt="старый храм" class="photo-grid__image">
+            <img src="<%=require('./images/photo-grid/karachaevsk.jpg')%>" alt="старый храм" class="photo-grid__image">
             <button class="photo-grid__button-delete" type="button"></button>
             <div class="photo-grid__captions">
               <h2 class="photo-grid__caption">Карачаевск</h2>
@@ -99,10 +99,14 @@
   <footer class="footer">
     <p class="footer__author">&copy;&nbsp;2020 Mesto Russia</p>
   </footer>
-  <script src="./scripts/cards.js"></script>
-  <script type="module" src="./scripts/index.js"></script>
-  <script type="module" src="./scripts/card.js"></script>
-  <script type="module" src="./scripts/FormValidator.js"></script>
-</body>
-
+<!--
+  <script type="module" src="./pages/index.js"></script>
+  <script type="module" src="./scripts/components/card.js"></script>
+  <script type="module" src="./scripts/components/FormValidator.js"></script>
+  <script type="module" src="./scripts/components/popup.js"></script>
+  <script type="module" src="./scripts/utils/cards.js"></script>
+  <script type="module" src="./scripts/components/UserInfo.js"></script>
+  <script type="module" src="./scripts/components/PopupWithImage.js"></script>
+  <script type="module" src="./scripts/components/PopupWithForm.js"></script></body>
+-->
 </html>
