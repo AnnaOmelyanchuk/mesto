@@ -1,11 +1,11 @@
- class Card {
+class Card {
   constructor(data, templateSelector, handleCardClick) {
     this.data = data;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
-    }
+  }
 
-    _getTemplate() {
+  _getTemplate() {
     const cardElement = document
       .querySelector(this._templateSelector)
       .content
@@ -34,15 +34,15 @@
     this._element.querySelector('.photo-grid__image').addEventListener('click', () => this._handleCardClick(this.data));
   }
 
-  _toggleLike(element) {
-    element.target.classList.toggle('photo-grid__caption-image_background_active');
+  _toggleLike(evt) {
+    evt.target.classList.toggle('photo-grid__caption-image_background_active');
   }
 
   _deleteImageCard(card) {
-  card.remove();
-}
+    card.remove();
+  }
 
 }
 
-export {Card};
+export { Card };
 

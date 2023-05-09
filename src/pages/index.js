@@ -1,19 +1,13 @@
 import './index.css';
-
-
-const jobInput = document.querySelector('.popup__input_text_caption');
-const nameInput = document.querySelector('.popup__input_text_name');
-const linkInput = document.querySelector('.popup__input_img_link');
-const imageNameInput = document.querySelector('.popup__input_img_name');
 const openEditButton = document.querySelector('.profile__edit-button');
 const openAddImageButton = document.querySelector('.profile__add-button');
+const dataAdd = { link: '', name: '' };
+const formValidators = {};
 
 
-
-
-import { initialCards as initialCards } from '../scripts/utils/cards.js';
-import Section from '../scripts/components/section.js';
-import { Card as Card } from '../scripts/components/card.js'
+import { initialCards as initialCards } from '../scripts/utils/Cards.js';
+import Section from '../scripts/components/Section.js';
+import { Card as Card } from '../scripts/components/Card.js'
 import { FormValidator as FormValidator, listElementsOfForm as listElementsOfForm } from '../scripts/components/FormValidator.js'
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
@@ -36,34 +30,29 @@ const initialCardsSection = new Section(
   {
     items: initialCards.reverse(),
     renderer: (item) => {
-      const card = new Card(item, '#cardImage', handleCardClick);
-      const cardElement = card.generateCard();
-      initialCardsSection.addItem(cardElement);
+      initialCardsSection.addItem(createCard(item));
     }
   }, '.photo-grid__list');
 
 initialCardsSection.renderElements();
 
 const addCard = new Section({
-  items: [{}],
+  items: [dataAdd],
   renderer: (item) => {
-    item = { link: linkInput.value, name: imageNameInput.value };
-    const card = new Card(item, '#cardImage', handleCardClick);
-    const cardElement = card.generateCard();
-    addCard.addItem(cardElement);
+    addCard.addItem(createCard(item));
   }
 }, '.photo-grid__list');
 
 
-function feelUpInput() {
-  nameInput.value = displayUserInfo.getUserInfo().name;
-  jobInput.value = displayUserInfo.getUserInfo().info;
+function fillUpInputEditForm() {
+  const { info, name } = displayUserInfo.getUserInfo();
+  popupEdit.setInputValues([name, info]);
 }
 
 //отправка формы редактирования
-function handleFormEditSubmit(evt) {
+function handleFormEditSubmit(evt, data) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  displayUserInfo.setUserInfo({ name: nameInput.value, info: jobInput.value });
+  displayUserInfo.setUserInfo({ name: data[0], info: data[1] });
   popupEdit.close();
 }
 
@@ -71,29 +60,46 @@ function handleCardClick(data) {
   popupImage.open(data);
 }
 
+function createCard(item) {
+  const card = new Card(item, '#cardImage', handleCardClick);
+  const cardElement = card.generateCard();
+  return cardElement
+}
+
 //отправка формы добавления
-function handleFormAddSubmit(evt) {
+function handleFormAddSubmit(evt, data) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  dataAdd.name = data[0];
+  dataAdd.link = data[1];
   addCard.renderElements();
-  evt.target.reset();
   popupAdd.close();
 }
 
 
 openEditButton.addEventListener('click', () => {
   popupEdit.open(),
-    feelUpInput(),
-    formValidatorEdit.resetValidation()
+    fillUpInputEditForm(),
+    formValidators.bioEdit.resetValidation()
 });
 
-
+/////////////////////////
 openAddImageButton.addEventListener('click', () => {
   popupAdd.open(),
-    formValidatorAdd.resetValidation();
+    formValidators.placeAdd.resetValidation();
 });
 
-const formValidatorAdd = new FormValidator(listElementsOfForm, '.popup__form_add');
-formValidatorAdd.enableValidation();
 
-const formValidatorEdit = new FormValidator(listElementsOfForm, '.popup__form_edit');
-formValidatorEdit.enableValidation();
+
+
+const enableValidation = (listElementsOfForm) => {
+  const formList = Array.from(document.querySelectorAll(listElementsOfForm.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(listElementsOfForm, formElement)
+    const formName = formElement.getAttribute('name')
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(listElementsOfForm);
+

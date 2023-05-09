@@ -9,25 +9,24 @@ const listElementsOfForm = {
 }
 
 class FormValidator {
-  constructor (listElementsOfForm, formSelector)  {
+  constructor(listElementsOfForm, formSelector) {
     this._inputSelector = listElementsOfForm.inputSelector;
     this._submitButtonSelector = listElementsOfForm.submitButtonSelector;
     this._inactiveButtonClass = listElementsOfForm.inactiveButtonClass;
     this._inputErrorClass = listElementsOfForm.inputErrorClass;
-    this._formSelector = formSelector;
+    this._form = formSelector;
   }
 
   enableValidation() {
-    this._form = document.querySelector(`${this._formSelector}`);
-     this._form.addEventListener('submit', function (evt) {
+    this._form.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
-    this._setEventListeners(this._form);
+    this._setEventListeners();
   };
 
-  _setEventListeners(form) {
-    this._inputList = Array.from(form.querySelectorAll(`${this._inputSelector}`));
-    this._buttonElement = form.querySelector(`${this._submitButtonSelector}`);
+  _setEventListeners() {
+    this._inputList = Array.from(this._form.querySelectorAll(`${this._inputSelector}`));
+    this._buttonElement = this._form.querySelector(`${this._submitButtonSelector}`);
     this._toggleButtonState(this._inputList, this._buttonElement);
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
@@ -40,7 +39,8 @@ class FormValidator {
   resetValidation() {
     this._toggleButtonState(this._inputList, this._buttonElement); //<== управляем кнопкой ==
     this._inputList.forEach((inputElement) => {
-    this._hideInputError(inputElement.closest('div').querySelector(`${this._inputErrorClass}`)) //<==очищаем ошибки ==
+      this._hideInputError(inputElement.closest('div').querySelector(`${this._inputErrorClass}`)) //<==очищаем ошибки ==
+      this._checkInputValidity(inputElement);
     });
   }
 
@@ -55,7 +55,7 @@ class FormValidator {
   }
 
   _hasInvalidInput(inputList) {
-    return  inputList.some((inputElement) => {
+    return inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
@@ -88,6 +88,6 @@ class FormValidator {
 
 }
 
-export {FormValidator, listElementsOfForm};
+export { FormValidator, listElementsOfForm };
 
 
