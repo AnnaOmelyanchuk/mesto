@@ -28,20 +28,13 @@ const displayUserInfo = new UserInfo({ nameSelector: '.profile__name', infoSelec
 
 const initialCardsSection = new Section(
   {
-    items: initialCards.reverse(),
     renderer: (item) => {
       initialCardsSection.addItem(createCard(item));
     }
   }, '.photo-grid__list');
 
-initialCardsSection.renderElements();
+initialCardsSection.renderElements(initialCards.reverse());
 
-const addCard = new Section({
-  items: [dataAdd],
-  renderer: (item) => {
-    addCard.addItem(createCard(item));
-  }
-}, '.photo-grid__list');
 
 
 function fillUpInputEditForm() {
@@ -51,8 +44,8 @@ function fillUpInputEditForm() {
 
 //отправка формы редактирования
 function handleFormEditSubmit(evt, data) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  displayUserInfo.setUserInfo({ name: data[0], info: data[1] });
+  evt.preventDefault();
+  displayUserInfo.setUserInfo(data);
   popupEdit.close();
 }
 
@@ -68,10 +61,8 @@ function createCard(item) {
 
 //отправка формы добавления
 function handleFormAddSubmit(evt, data) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  dataAdd.name = data[0];
-  dataAdd.link = data[1];
-  addCard.renderElements();
+  evt.preventDefault();
+  initialCardsSection.renderElements([data]);
   popupAdd.close();
 }
 
@@ -82,7 +73,6 @@ openEditButton.addEventListener('click', () => {
     formValidators.bioEdit.resetValidation()
 });
 
-/////////////////////////
 openAddImageButton.addEventListener('click', () => {
   popupAdd.open(),
     formValidators.placeAdd.resetValidation();

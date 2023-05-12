@@ -8,9 +8,9 @@ export default class UserInfo {
     this.userInfo = this._userInfoNode.textContent;
     return { name: this.userName, info: this.userInfo }
   }
-  setUserInfo({ name, info }) {
+  setUserInfo({ name, text }) {
     this._userNameNode.textContent = name;
-    this._userInfoNode.textContent = info;
+    this._userInfoNode.textContent = text;
   }
 
 }

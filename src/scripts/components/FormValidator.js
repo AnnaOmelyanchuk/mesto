@@ -5,7 +5,8 @@ const listElementsOfForm = {
   submitButtonSelector: '.popup__save-btn',
   inactiveButtonClass: 'popup__save-btn_state_inactive',
   inputErrorClass: '.popup__error-caption_place_name',
-  errorClass: '.popup__error_visible'
+  errorClass: 'popup__input_type_error'
+
 }
 
 class FormValidator {
@@ -14,6 +15,7 @@ class FormValidator {
     this._submitButtonSelector = listElementsOfForm.submitButtonSelector;
     this._inactiveButtonClass = listElementsOfForm.inactiveButtonClass;
     this._inputErrorClass = listElementsOfForm.inputErrorClass;
+    this._errorClass = listElementsOfForm.errorClass;
     this._form = formSelector;
   }
 
@@ -39,8 +41,8 @@ class FormValidator {
   resetValidation() {
     this._toggleButtonState(this._inputList, this._buttonElement); //<== управляем кнопкой ==
     this._inputList.forEach((inputElement) => {
+      inputElement.classList.remove(`${this._errorClass}`);
       this._hideInputError(inputElement.closest('div').querySelector(`${this._inputErrorClass}`)) //<==очищаем ошибки ==
-      this._checkInputValidity(inputElement);
     });
   }
 
@@ -64,13 +66,16 @@ class FormValidator {
     this._errorCaption = inputElement.closest('div').querySelector(`${this._inputErrorClass}`);
     if (!inputElement.validity.valid) {
       if (inputElement.value != 0) {
-        this._showInputError(this._errorCaption, `Минимальное количество символов 2. Длина текста сейчас: ${inputElement.value.length} символ.`);
+        this._showInputError(this._errorCaption, inputElement.validationMessage);
+        inputElement.classList.add(`${this._errorClass}`);
       }
       else {
-        this._showInputError(this._errorCaption, `Вы пропустили это поле`);
+        this._showInputError(this._errorCaption, inputElement.validationMessage);
+        inputElement.classList.add(`${this._errorClass}`);
       }
       if (inputElement.validity.typeMismatch) {
-        this._showInputError(this._errorCaption, `Введите адрес сайта.`);
+        this._showInputError(this._errorCaption, inputElement.validationMessage);
+        inputElement.classList.add(`${this._errorClass}`);
       }
     }
     else {

@@ -31,7 +31,7 @@ class Card {
 
     this._element.querySelector('.photo-grid__button-delete').addEventListener('click', () => this._deleteImageCard(this._element));
 
-    this._element.querySelector('.photo-grid__image').addEventListener('click', () => this._handleCardClick(this.data));
+    this._cardImage.addEventListener('click', () => this._handleCardClick(this.data));
   }
 
   _toggleLike(evt) {
