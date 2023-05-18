@@ -1,7 +1,6 @@
 .profile__avatar {
   width: 120px;
-  height: 100%;
-  object-fit: cover;
+  position: relative;
   border-radius: 1000px;
 }
 
@@ -9,4 +8,14 @@
   .profile__avatar {
     margin: 0 auto 26px auto;
   }
+}
+
+
+
+.profile__avatar:hover:before {
+  position: absolute;
+  content: url("../../../images/buttons/edit_avatar.svg");
+  left: 47px;
+  top: 38%;
+  vertical-align: middle;
 }

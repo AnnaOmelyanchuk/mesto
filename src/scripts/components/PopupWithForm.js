@@ -15,16 +15,26 @@ export default class PopupWithForm extends Popup {
     return this._inputValues
   }
 
-  setEvenListeners() {
+  setEvenListeners(card, cardId) {
     super.setEventListeners();
     this.form = this._popup.querySelector('.popup__form');
-    this.form.addEventListener('submit', (e) => this._handleFormSubmit(e, this._getInputValues()));
+    this.form.addEventListener('submit', (e) => this._handleFormSubmit({
+      evt: e,
+      data: this._getInputValues(),
+      card: card,
+      cardId: cardId
+    })
+    );
   }
 
   setInputValues(data) {
     this._inputList.forEach((input, index) => {
       input.value = data[index];
     });
+  }
+
+  setTextOnSubmitBtn(text) {
+    this.form.querySelector('.popup__save-btn').textContent = `${text}`;
   }
 
   close() {

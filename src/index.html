@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
-  <!--<link rel="stylesheet" href="pages/index.css">-->
+  <!--
+  <link rel="stylesheet" href="pages/index.css">
+  -->
 </head>
 
 <body class="page">
@@ -16,7 +18,9 @@
 
   <main>
     <section aria-label="Профиль" class="profile">
-      <img src="<%=require('./images/avatar/avatar-zhack.jpg')%>" alt="аватар" class="profile__avatar">
+      <div class="profile__avatar">
+        <img src="<%=require('./images/avatar/avatar-zhack.jpg')%>" alt="аватар" class="profile__avatar-img">
+      </div>
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
         <button class="profile__edit-button" type="button" aria-label="редактировать"></button>
@@ -33,7 +37,10 @@
             <button class="photo-grid__button-delete" type="button"></button>
             <div class="photo-grid__captions">
               <h2 class="photo-grid__caption">Карачаевск</h2>
-              <button class="photo-grid__caption-image" type="button"></button>
+              <div class="photo-grid__like-box">
+                <button class="photo-grid__caption-image" type="button"></button>
+                <span class="photo-grid__quantity-like">3</span>
+              </div>
             </div>
           </li>
         </template>
@@ -54,7 +61,7 @@
             <span class="popup__error-caption popup__error-caption_place_name"></span>
           </div>
           <div>
-            <input class="popup__input popup__input_text_caption" type="text" name="text" placeholder="" required
+            <input class="popup__input popup__input_text_caption" type="text" name="about" placeholder="" required
               minlength="2" maxlength="200">
             <span class="popup__error-caption popup__error-caption_place_name"></span>
           </div>
@@ -87,6 +94,35 @@
     </div>
   </div>
 
+  <div class="popup popup_edit-avatar">
+    <div class="popup__reletive-block">
+      <button class="popup__close-btn popup__close-btn_place_form popup__close-btn_add-image" type="button"
+        aria-label="закрыть"></button>
+      <div class="popup__container">
+        <form class="popup__form popup__form_add" name="placeAdd">
+          <h2 class="popup__title">Обновить аватар</h2>
+          <input class="popup__input popup__input_img_link" name="avatar" placeholder="Ссылка на картинку" required
+            type="url">
+          <span class="popup__error-caption popup__error-caption_place_name"></span>
+          <button class="popup__save-btn" type="submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup popup_confirm">
+    <div class="popup__reletive-block">
+      <button class="popup__close-btn popup__close-btn_place_form popup__close-btn_add-image" type="button"
+        aria-label="закрыть"></button>
+      <div class="popup__container">
+        <form class="popup__form popup__form_add" name="placeAdd">
+          <h2 class="popup__title">Вы уверены?</h2>
+          <button class="popup__save-btn" type="submit">Да</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <div class="popup popup_image-viewer">
     <div class="popup__reletive-block">
       <figure>
@@ -105,14 +141,17 @@
   </footer>
 </body>
 <!---
-  <script type="module" src="./pages/index.js"></script>
-  <script type="module" src="./scripts/components/Card.js"></script>
-  <script type="module" src="./scripts/components/FormValidator.js"></script>
-  <script type="module" src="./scripts/components/Popup.js"></script>
-  <script type="module" src="./scripts/utils/Cards.js"></script>
-  <script type="module" src="./scripts/components/UserInfo.js"></script>
-  <script type="module" src="./scripts/components/PopupWithImage.js"></script>
-  <script type="module" src="./scripts/components/PopupWithForm.js"></script></body>
+<script type="module" src="./pages/index.js"></script>
+<script type="module" src="./scripts/components/Card.js"></script>
+<script type="module" src="./scripts/components/FormValidator.js"></script>
+<script type="module" src="./scripts/components/Popup.js"></script>
+<script type="module" src="./scripts/utils/Cards.js"></script>
+<script type="module" src="./scripts/components/UserInfo.js"></script>
+<script type="module" src="./scripts/components/PopupWithImage.js"></script>
+<script type="module" src="./scripts/components/PopupWithForm.js"></script>
+<script type="module" src="./scripts/components/Api.js"></script>
 -->
+</body>
+
 
 </html>
