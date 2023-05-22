@@ -1,4 +1,6 @@
-//import './index.css';
+import './index.css';
+
+
 const openEditButton = document.querySelector('.profile__edit-button');
 const openAddImageButton = document.querySelector('.profile__add-button');
 const openEditAvatarButton = document.querySelector('.profile__avatar');
