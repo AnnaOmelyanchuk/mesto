@@ -1,4 +1,4 @@
-import './index.css';
+//import './index.css';
 const openEditButton = document.querySelector('.profile__edit-button');
 const openAddImageButton = document.querySelector('.profile__add-button');
 const openEditAvatarButton = document.querySelector('.profile__avatar');
@@ -12,6 +12,7 @@ import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import UserAvatar from '../scripts/components/UserAvatar.js';
+import PopupDeleteCard from '../scripts/components/PopupDeleteCard.js';
 
 
 const api = new Api({
@@ -22,27 +23,29 @@ const api = new Api({
   headers: { authorization: '96a78f06-11d7-4e34-a9b2-cad17675fa32' }
 });
 
-api.getUserInformationMe().then(res => {
-  userId = res._id;
 
-  api.getInitialCardsSection().then(res => {
-    initialCardsSection.renderElements(res);
-  });
-  displayUserInfo.setUserInfo(res);
-  setUserAvatar.setAvatar(res.avatar);
+Promise
+  .all([api.getUserInformationMe(), api.getInitialCardsSection()])
+  .then(res => {
+    userId = res[0]._id;
+    initialCardsSection.renderElements(res[1]);
+    displayUserInfo.setUserInfo(res[0]);
+    setUserAvatar.setAvatar(res[0].avatar);
+  })
+  .catch(err => console.log(`Ошибка.....: ${err}`));
 
-});
 
 const popupEdit = new PopupWithForm('.popup_edit', handleFormEditSubmit);
-popupEdit.setEvenListeners();
+popupEdit.setEventListeners();
 
 const popupAdd = new PopupWithForm('.popup_add-image', handleFormAddSubmit);
-popupAdd.setEvenListeners();
+popupAdd.setEventListeners();
 
 const popupEditAvatar = new PopupWithForm('.popup_edit-avatar', handleFormEditAvatarSubmit);
-popupEditAvatar.setEvenListeners();
+popupEditAvatar.setEventListeners();
 
-const popupConfirmDelete = new PopupWithForm('.popup_confirm', handleFormConfirmDelete);
+const popupConfirmDelete = new PopupDeleteCard('.popup_confirm', handleFormConfirmDelete);
+popupConfirmDelete.setEventListeners();
 
 const popupImage = new PopupWithImage('.popup_image-viewer', { imageSelector: '.popup__image', captionSelector: '.popup__caption' });
 popupImage.setEventListeners();
@@ -66,19 +69,23 @@ function fillUpInputEditForm() {
 function handleFormEditSubmit({ evt, data }) {
   evt.preventDefault();
 
-  api.setUserNameAbout(data).then((res) => {
-    displayUserInfo.setUserInfo(res);
-    popupEdit.close();
-  });
+  api.setUserNameAbout(data)
+    .then((res) => {
+      displayUserInfo.setUserInfo(res);
+      popupEdit.close();
+    })
+    .catch(err => console.log(`Ошибка.....: ${err}`));
 }
 
 function handleFormEditAvatarSubmit({ evt, data }) {
   evt.preventDefault();
 
-  api.setUserAvatar(data).then(res => {
-    setUserAvatar.setAvatar(res.avatar);
-    popupEditAvatar.close();
-  });
+  api.setUserAvatar(data)
+    .then(res => {
+      setUserAvatar.setAvatar(res.avatar);
+      popupEditAvatar.close();
+    })
+    .catch(err => console.log(`Ошибка.....: ${err}`));
 }
 
 function handleCardClick(data) {
@@ -86,53 +93,54 @@ function handleCardClick(data) {
 }
 
 function createCard(item) {
-  const card = new Card(item, '#cardImage', handleCardClick, handleCardDelete, userId, changeLike);
+  const card = new Card(item, '#cardImage', handleCardClick, handleCardDeleteClick, userId, changeLike);
   const cardElement = card.generateCard();
   return cardElement
 }
 
-function handleCardDelete({ card, cardId }) {
-  popupConfirmDelete.setEvenListeners(card, cardId);
-  popupConfirmDelete.open()
+function handleCardDeleteClick({ card, cardId }) {
+  popupConfirmDelete.open();
+  popupConfirmDelete.getCard({ card, cardId });
 }
 
-function handleFormConfirmDelete({ evt, card, cardId }) {
+function handleFormConfirmDelete({ evt }) {
   evt.preventDefault();
-
-  api.deleteCard(cardId).then((res) => {
-    card.remove();
-    popupConfirmDelete.close();
-  })
-
+  api.deleteCard(popupConfirmDelete.cardId)
+    .then((res) => {
+      popupConfirmDelete.deleteCard();
+      popupConfirmDelete.close();
+    })
+    .catch(err => console.log(`Ошибка.....: ${err}`));
 }
 
 
 //отправка формы добавления
 function handleFormAddSubmit({ evt, data }) {
   evt.preventDefault();
-  popupAdd.setTextOnSubmitBtn('Сохранение...');
-
-  api.postCardNameLink(data).then((res) => {
-    initialCardsSection.renderElements([res]);
-    popupAdd.close();
-    popupAdd.setTextOnSubmitBtn('Сохранение');
-  })
-
+  api.postCardNameLink(data)
+    .then((res) => {
+      initialCardsSection.renderElements([res]);
+      popupAdd.close();
+    })
+    .catch(err => console.log(`Ошибка.....: ${err}`));
 }
 
-function changeLike(state, data) {
+function changeLike(state, data, toggleImgLike) {
   if (state) {
-
-    api.deleteLike(data).then(res => {
-      data.quantityLike.textContent = res.likes.length;
-    })
+    api.deleteLike(data)
+      .then(res => {
+        data.quantityLike.textContent = res.likes.length;
+        toggleImgLike()
+      })
+      .catch(err => console.log(`Ошибка.....: ${err}`));
   }
 
   else {
     api.putLike(data).then(res => {
       data.quantityLike.textContent = res.likes.length;
+      toggleImgLike()
     })
-
+      .catch(err => console.log(`Ошибка.....: ${err}`));
   }
 }
 
@@ -150,7 +158,7 @@ openAddImageButton.addEventListener('click', () => {
 
 openEditAvatarButton.addEventListener('click', () => {
   popupEditAvatar.open()
-  formValidators.bioEdit.resetValidation()
+  formValidators.editAvatar.resetValidation()
 });
 
 

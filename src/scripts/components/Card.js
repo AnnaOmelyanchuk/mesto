@@ -48,22 +48,28 @@ class Card {
     this._element.querySelector('.photo-grid__caption-image').addEventListener('click', (e) => this._toggleLike(e))
 
     if (this.userId === this.data.owner._id) {
-      this._element.querySelector('.photo-grid__button-delete').addEventListener('click', () => this._handleCardDelete({card: this._element, cardId: this.data._id}));
+      this._element.querySelector('.photo-grid__button-delete').addEventListener('click', () => this._handleCardDelete({ card: this._element, cardId: this.data._id }));
     }
 
     this._cardImage.addEventListener('click', () => this._handleCardClick(this.data));
   }
 
   _toggleLike(evt) {
-
     if (this.likeButton.classList.contains("photo-grid__caption-image_background_active")) {
-      this.changeLike(true, {cardId: this.data._id, quantityLike: this.quantityLike });
+      this.changeLike(true,
+        { cardId: this.data._id, quantityLike: this.quantityLike },
+        function toggleImgLike() { evt.target.classList.toggle('photo-grid__caption-image_background_active'); }
+      );
     }
     else {
-      this.changeLike(false, {cardId: this.data._id, quantityLike: this.quantityLike });
+      this.changeLike(false,
+        { cardId: this.data._id, quantityLike: this.quantityLike },
+        function toggleImgLike() { evt.target.classList.toggle('photo-grid__caption-image_background_active'); }
+      );
     }
-    evt.target.classList.toggle('photo-grid__caption-image_background_active');
+
   }
+
 }
 
 export { Card };

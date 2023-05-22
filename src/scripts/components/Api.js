@@ -16,13 +16,7 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Ошибка: ${res.status}`)
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
+        return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
 
@@ -37,13 +31,7 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Ошибка: ${res.status}`)
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
+        return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
 
@@ -63,13 +51,7 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Ошибка: ${res.status}`)
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
+        return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
 
@@ -88,13 +70,7 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Ошибка: ${res.status}`)
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
+        return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
 
@@ -110,13 +86,7 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Ошибка: ${res.status}`)
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
+        return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
 
@@ -136,16 +106,9 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Ошибка: ${res.status}`)
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
+        return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
-
 
   deleteLike(data) {
     return fetch(`${this.cardUrl}/${data.cardId}/likes`, {
@@ -159,13 +122,7 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Ошибка: ${res.status}`)
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
+        return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
 
@@ -181,14 +138,7 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Ошибка: ${res.status}`)
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
+        return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
-
 }

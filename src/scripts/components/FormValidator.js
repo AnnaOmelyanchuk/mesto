@@ -41,8 +41,8 @@ class FormValidator {
   resetValidation() {
     this._toggleButtonState(this._inputList, this._buttonElement); //<== управляем кнопкой ==
     this._inputList.forEach((inputElement) => {
-      inputElement.classList.remove(`${this._errorClass}`);
-      this._hideInputError(inputElement.closest('div').querySelector(`${this._inputErrorClass}`)) //<==очищаем ошибки ==
+   //   inputElement.classList.remove(`${this._errorClass}`);
+      this._hideInputError(inputElement.closest('div').querySelector(`${this._inputErrorClass}`), inputElement) //<==очищаем ошибки ==
     });
   }
 
@@ -79,7 +79,7 @@ class FormValidator {
       }
     }
     else {
-      this._hideInputError(this._errorCaption);
+      this._hideInputError(this._errorCaption, inputElement);
     }
   };
 
@@ -87,8 +87,9 @@ class FormValidator {
     errorElement.setAttribute('erorMessage', `${errorMessage}`);
   };
 
-  _hideInputError = (errorElement) => {
+  _hideInputError = (errorElement, inputElement) => {
     errorElement.setAttribute('erorMessage', '');
+    inputElement.classList.remove(`${this._errorClass}`);
   };
 
 }
